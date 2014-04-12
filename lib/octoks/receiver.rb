@@ -15,6 +15,7 @@ module Octoks
     end
 
     def emit(event)
+      hooks[event.name] ||= []
       hooks[event.name].each do |hook|
         hook.call(event)
       end

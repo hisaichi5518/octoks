@@ -23,7 +23,10 @@ class TestReceiver < MiniTest::Unit::TestCase
 
     event = Octoks::Event.new(:push, {"test" => "test"})
     receiver.emit(event)
-
     assert_equal event.payload["count"], 2
+
+    event = Octoks::Event.new(:test, {"test" => "test"})
+    receiver.emit(event)
+    assert_equal receiver.hooks[:test].size, 0
   end
 end
