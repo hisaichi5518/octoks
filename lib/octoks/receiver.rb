@@ -25,7 +25,7 @@ module Octoks
       req    = Rack::Request.new(env)
       failed = [400, [], ["BAD REQUEST"]]
 
-      if !req.post? or req.params['payload'].nil? or req.env["X-GitHub-Event"].nil?
+      if !req.post? or req.params['payload'].nil? or req.env["HTTP_X_GITHUB_EVENT"].nil?
         return failed
       end
 
@@ -35,7 +35,7 @@ module Octoks
         return failed
       end
 
-      event_name = req.env["X-GitHub-Event"]
+      event_name = req.env["HTTP_X_GITHUB_EVENT"]
       event      = Octoks::Event.new(event_name.to_sym, payload)
 
       emit(event)
